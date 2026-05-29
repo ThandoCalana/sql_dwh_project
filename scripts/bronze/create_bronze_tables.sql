@@ -1,9 +1,10 @@
 
 DROP PROCEDURE IF EXISTS bronze.create_bronze_tables;
+GO
 
 CREATE PROCEDURE bronze.create_bronze_tables AS
 BEGIN
-	TRY
+	BEGIN TRY
 
 		PRINT '------------------------------------------'
 		PRINT 'Creating CRM tables'
@@ -16,8 +17,8 @@ BEGIN
 		CREATE TABLE bronze.crm_cust_info (
 			cst_id INT,
 			cst_key NVARCHAR(50),
-			cst_firstname NVARCHAR(20),
-			cst_lastname NVARCHAR(20),
+			cst_firstname NVARCHAR(50),
+			cst_lastname NVARCHAR(50),
 			cst_marital_status CHAR(2),
 			cst_gndr CHAR(2),
 			cst_create_date DATE
@@ -49,9 +50,9 @@ BEGIN
 			sls_ord_num NVARCHAR(50),
 			sls_prd_key NVARCHAR(50),
 			sls_cust_id INT,
-			sls_order_dt DATE,
-			sls_ship_dt DATE,
-			sls_due_dt DATE,
+			sls_order_dt INT,
+			sls_ship_dt INT,
+			sls_due_dt INT,
 			sls_sales INT,
 			sls_quantity INT,
 			sls_price INT
@@ -106,9 +107,12 @@ BEGIN
 		PRINT '------------------------------------------'
 		PRINT 'ALL ERP Tables created'
 		PRINT '------------------------------------------'
-	EXCEPT
-		PRINT 'ERROR LOADING TABLES'
 
+	END TRY
+
+	BEGIN CATCH
+		PRINT 'ERROR LOADING TABLES'
+	END CATCH
 END;
 GO
 
